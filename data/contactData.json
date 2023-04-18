@@ -1,0 +1,22 @@
+{
+  "contacts": [
+    {
+      "id": "85c1bd82-e3b3-4381-8c04-a8c02794fc06",
+      "name": "张三",
+      "handPhoneNumber": "18900000000",
+      "email": "zhangsan@123.com"
+    },
+    {
+      "id": "3954504e-cc72-4daa-8fb2-f0921c561c61",
+      "name": "李四",
+      "handPhoneNumber": "18900000001",
+      "email": "lisi@123.com"
+    },
+    {
+      "id": "d114ae79-5ca7-4d58-a96f-5593f4b69b2e",
+      "name": "王五",
+      "handPhoneNumber": "18900000002",
+      "email": "wangwu@123.com"
+    }
+  ]
+}
