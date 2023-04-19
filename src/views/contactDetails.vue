@@ -1,38 +1,57 @@
 <template>
-  <div v-if="error">
-    <h1>{{ error }}</h1>
-  </div>
+
   <div v-if="contact">
-    <h1>{{ contact.name }}</h1>
-    <h2>{{ contact.handPhoneNumber }}</h2>
-    <h2>{{ contact.email }}</h2>
-    <button @click="deleteContact">删除</button>
-  </div>
-  <div v-else>
-    <h2>Loading...</h2>
+    <a-page-header
+      style="font-weight: bold;"
+      :title=contact.name
+      @back="() => $router.go(-1)"
+    />
+
+    <div style="text-align: center;">
+      <a-image
+        :width="200"
+        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+      />
+    </div>
+
+    <a-descriptions bordered>
+      <a-descriptions-item label="手机">{{ contact.handPhoneNumber }}</a-descriptions-item>
+      <a-descriptions-item label="邮箱">{{ contact.email }}</a-descriptions-item>
+      </a-descriptions>
+      <a-button type="primary" shape="round" :size="size" @click="deleteContact">删除</a-button>
   </div>
 </template>
 
 <script>
-import getContact from '../composables/getContact.js'
-import { useRouter, useRoute} from 'vue-router'
+import {useRouter} from 'vue-router'
+import getContact from '@/composables/getContact'
+import { AntDesignOutlined } from '@ant-design/icons-vue';
+
 export default {
-    props: ['id'],
-    setup(props) {
-        const router = useRouter()
-        const {contact, error, load} = getContact(props.id)
-        load()
-        const deleteContact = () => {
-            fetch('http://localhost:3000/contacts/' + props.id, {
-            method: 'delete',
-          })
-          router.push({path: '/'})
-        }
-        return {contact, error, deleteContact}
+  props: ['id'],
+
+  components: {
+    AntDesignOutlined
+  },
+
+  setup(props) {
+    const router = useRouter()
+    const {contact, error, load} = getContact(props.id)
+    
+    load()
+
+    const deleteContact = () => {
+      fetch('http://localhost:3000/contacts/' + props.id, {
+        method: 'delete',
+      })
+      router.push({path: '/'})
     }
+    
+    return {
+      contact,
+      error,
+      deleteContact
+    }
+  }
 }
 </script>
-
-<style>
-
-</style>
