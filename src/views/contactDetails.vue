@@ -17,8 +17,15 @@
     <a-descriptions bordered>
       <a-descriptions-item label="手机">{{ contact.handPhoneNumber }}</a-descriptions-item>
       <a-descriptions-item label="邮箱">{{ contact.email }}</a-descriptions-item>
-      </a-descriptions>
+    </a-descriptions>
+      
+    <div style="text-align: right; padding: 10px 10px; ">
+      <a-button type="primary" shape="round" :size="size" style="margin-right: 10px;">
+        <router-link :to="{name: 'editContact', params: {id: contact.id}, query: {name: contact.name, handPhoneNumber:contact.handPhoneNumber, email:contact.email}}">编辑</router-link>
+      </a-button>
       <a-button type="primary" shape="round" :size="size" @click="deleteContact">删除</a-button>
+    </div>
+
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <a-page-header
     style="font-weight: bold;"
-    title="添加联系人"
+    title="编辑联系人"
     @back="() => $router.go(-1)"/>
 
   <a-form
@@ -24,18 +24,17 @@
       <a-button type="primary" html-type="submit" shape="round">提交</a-button>
     </a-form-item>
   </a-form>
-
+  
 </template>
 
 <script>
+import { reactive} from 'vue';
+import { useRoute, useRouter} from 'vue-router'
 
-import { defineComponent, reactive} from 'vue';
-import { useRouter} from 'vue-router'
-import { v4 as uuidv4 } from 'uuid';
-
-export default defineComponent({
-  setup() {
-    //functions of form
+export default {
+  props: ['id'],
+  setup(props) {
+    const route = useRoute()
     const router = useRouter()
     const layout = {
       labelCol: {
@@ -45,25 +44,26 @@ export default defineComponent({
         span: 10,
       },
     };
+
     const validateMessages = {
       required: '请填写${label}',
       types: {
         email: '请填写正确的邮箱地址',
       }
     };
+
     const formState = reactive({
       user: {
-        name: '',
-        handPhoneNumber: '',
-        email: '',
+        name: route.query.name,
+        handPhoneNumber: route.query.handPhoneNumber,
+        email: route.query.email,
       },
     });
 
     const onFinish = () => {
-      const { v4: uuidv4 } = require('uuid');
-      var contact = {"id": uuidv4(), "name": formState.user.name, "handPhoneNumber": formState.user.handPhoneNumber, "email": formState.user.email}
-      fetch('http://localhost:3000/contacts', {
-        method: 'POST',
+      var contact = {"name": formState.user.name, "handPhoneNumber": formState.user.handPhoneNumber, "email": formState.user.email}
+      fetch('http://localhost:3000/contacts/' + route.params.id, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contact)
       })
@@ -78,7 +78,7 @@ export default defineComponent({
       validateMessages,
     };
   },
-});
+};
 </script>
 
 <style>
